@@ -55,6 +55,25 @@ export async function getNaatsWithLimit(page = 1, limit = 20) {
   }
 }
 
+export async function getNaatBySlug(slug: string) {
+  try {
+    const naat = await Naat.findOne({ slug })
+      .populate("authors", "name slug")
+      .populate("sanakhwans", "name slug")
+      .populate("festivals", "name slug")
+      .populate("categories", "name slug");
+
+    if (!naat) {
+      throw new Error("Naat not found");
+    }
+
+    return naat;
+  } catch (error) {
+    console.error("Error fetching naat by slug:", error);
+    throw new Error("Failed to fetch naat by slug");
+  }
+}
+
 export async function getNaatById(id: string) {
   try {
     if (!Types.ObjectId.isValid(id)) {
