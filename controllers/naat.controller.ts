@@ -60,11 +60,16 @@ export async function getNaatBySlug(slug: string) {
   return naat;
 }
 
-
-export async function createNaat(data: any) {
+export async function createOneNaat(data: any) {
   const naat = await Naat.create(data);
 
   return naat;
+}
+
+export async function createManyNaats(data: any[]) {
+  const naats = await Naat.insertMany(data);
+
+  return naats;
 }
 
 export async function updateNaat(slug: string, data: any) {
