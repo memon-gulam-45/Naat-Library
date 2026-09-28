@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import dbConnect from "@/lib/db/mongodb";
 
-import { getAllNaats, createNaat } from "@/controllers/naat.controller";
+import { getAllNaats, createOneNaat } from "@/controllers/naat.controller";
 
 export async function GET(req: NextRequest) {
   try {
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
     const body = await req.json();
 
-    const naat = await createNaat(body);
+    const naat = await createOneNaat(body);
 
     return NextResponse.json(
       { success: true, message: "Naat created successfully", data: naat },
