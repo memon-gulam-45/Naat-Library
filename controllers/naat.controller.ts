@@ -67,12 +67,8 @@ export async function createNaat(data: any) {
   return naat;
 }
 
-export async function updateNaat(id: string, data: any) {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error("Invalid Naat Id");
-  }
-
-  const naat = await Naat.findByIdAndUpdate(id, data, {
+export async function updateNaat(slug: string, data: any) {
+  const naat = await Naat.findOneAndUpdate({ slug }, data, {
     new: true,
     runValidators: true,
   });
@@ -84,12 +80,8 @@ export async function updateNaat(id: string, data: any) {
   return naat;
 }
 
-export async function deleteNaat(id: string) {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new Error("Invalid Naat Id");
-  }
-
-  const naat = await Naat.findByIdAndDelete(id);
+export async function deleteNaat(slug: string) {
+  const naat = await Naat.findOneAndDelete({ slug });
 
   if (!naat) {
     throw new Error("Naat not found");
