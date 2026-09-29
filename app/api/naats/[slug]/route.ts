@@ -50,6 +50,17 @@ export async function PUT(
       );
     }
 
+    // Duplicate slug
+    if (error.code === 11000) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "A naat with this slug already exists",
+        },
+        { status: 409 },
+      );
+    }
+
     return NextResponse.json(
       { error: "Failed to update naat" },
       { status: 500 },
