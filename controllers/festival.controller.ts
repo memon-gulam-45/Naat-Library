@@ -2,7 +2,9 @@ import Festival from "@/models/Festival";
 
 // GET ALL FESTIVALS
 export async function getAllFestivals() {
-  const festivals = await Festival.find().sort({ createdAt: -1 });
+  const festivals = await Festival.find()
+    .select("name slug profileImage slug")
+    .sort({ name: 1 });
 
   return festivals;
 }
