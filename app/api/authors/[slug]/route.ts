@@ -59,6 +59,18 @@ export async function PUT(
         { status: 404 },
       );
     }
+
+    // Duplicate slug
+    if (error.code === 11000) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "A author with this slug already exists",
+        },
+        { status: 409 },
+      );
+    }
+
     return NextResponse.json(
       { success: false, error: "Failed to update author" },
       { status: 500 },
