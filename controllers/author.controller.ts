@@ -1,7 +1,9 @@
 import Author from "@/models/Author";
 
 export async function getAllAuthors() {
-  const authors = await Author.find().sort({ createdAt: -1 });
+  const authors = await Author.find()
+    .select("name slug profileImage slug")
+    .sort({ name: 1 });
 
   return authors;
 }
