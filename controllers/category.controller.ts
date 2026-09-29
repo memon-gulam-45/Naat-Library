@@ -2,7 +2,9 @@ import Category from "@/models/Category";
 
 // GET ALL CATEGORIES
 export async function getAllCategories() {
-  const categories = await Category.find().sort({ createdAt: -1 });
+  const categories = await Category.find()
+    .select("name slug profileImage slug")
+    .sort({ name: 1 });
 
   return categories;
 }
