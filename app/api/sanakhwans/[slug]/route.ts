@@ -8,6 +8,8 @@ import {
   deleteSanakhwan,
 } from "@/controllers/sanakhwan.controller";
 
+import { requireAdmin } from "@/lib/auth/admin-auth";
+
 // GET /api/sanakhwans/:slug
 export async function GET(
   request: NextRequest,
@@ -53,6 +55,18 @@ export async function PUT(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
+    const auth = await requireAdmin(request);
+
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: auth.message,
+        },
+        { status: 401 },
+      );
+    }
+
     await dbConnect();
 
     const { slug } = await params;
@@ -118,6 +132,18 @@ export async function DELETE(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
+    const auth = await requireAdmin(request);
+
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: auth.message,
+        },
+        { status: 401 },
+      );
+    }
+
     await dbConnect();
 
     const { slug } = await params;
