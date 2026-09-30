@@ -8,6 +8,8 @@ import {
   deleteNaat,
 } from "@/controllers/naat.controller";
 
+import { requireAdmin } from "@/lib/auth/admin-auth";
+
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
@@ -32,6 +34,18 @@ export async function PUT(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
+    const auth = await requireAdmin(request);
+
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: auth.message,
+        },
+        { status: 401 },
+      );
+    }
+
     await dbConnect();
     const { slug } = await params;
     const data = await request.json();
@@ -73,6 +87,18 @@ export async function DELETE(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
+    const auth = await requireAdmin(request);
+
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: auth.message,
+        },
+        { status: 401 },
+      );
+    }
+
     await dbConnect();
 
     const { slug } = await params;
