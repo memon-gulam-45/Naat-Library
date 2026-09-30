@@ -7,6 +7,8 @@ import {
   createOneFestival,
 } from "@/controllers/festival.controller";
 
+import { requireAdmin } from "@/lib/auth/admin-auth";
+
 // GET /api/festivals
 export async function GET() {
   try {
@@ -37,6 +39,18 @@ export async function GET() {
 // POST /api/festivals
 export async function POST(request: NextRequest) {
   try {
+    const auth = await requireAdmin(request);
+
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: auth.message,
+        },
+        { status: 401 },
+      );
+    }
+
     await dbConnect();
 
     const body = await request.json();
