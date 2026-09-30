@@ -1,4 +1,4 @@
-import Author from "@/models/Author";
+import { Author } from "@/models";
 
 export async function getAllAuthors() {
   const authors = await Author.find()

@@ -1,6 +1,6 @@
 import { Types } from "mongoose";
 
-import Naat from "@/models/Naat";
+import { Naat } from "@/models";
 
 export async function getAllNaats() {
   const naats = await Naat.find()

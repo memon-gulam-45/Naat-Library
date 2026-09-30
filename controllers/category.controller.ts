@@ -1,4 +1,4 @@
-import Category from "@/models/Category";
+import { Category } from "@/models";
 
 // GET ALL CATEGORIES
 export async function getAllCategories() {

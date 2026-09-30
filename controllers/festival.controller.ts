@@ -1,4 +1,4 @@
-import Festival from "@/models/Festival";
+import { Festival } from "@/models";
 
 // GET ALL FESTIVALS
 export async function getAllFestivals() {

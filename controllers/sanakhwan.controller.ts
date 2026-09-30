@@ -1,4 +1,4 @@
-import Sanakhwan from "@/models/Sanakhwan";
+import { Sanakhwan } from "@/models";
 
 // GET ALL SANAKHWANS
 export async function getAllSanakhwans() {

@@ -2,7 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import bcrypt from "bcrypt";
 
 import dbConnect from "@/lib/db/mongodb";
-import User from "@/models/User";
+import { User } from "@/models";
 
 import { createToken } from "@/lib/auth/jwt";
 
