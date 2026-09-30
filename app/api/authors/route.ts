@@ -6,6 +6,8 @@ import {
   createOneAuthor,
 } from "@/controllers/author.controller";
 
+import { requireAdmin } from "@/lib/auth/admin-auth";
+
 export async function GET(request: NextRequest) {
   try {
     await dbConnect();
@@ -22,8 +24,21 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = await requireAdmin(request);
+
+    if (!auth.authenticated) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: auth.message,
+        },
+        { status: 401 },
+      );
+    }
+
     await dbConnect();
     const body = await request.json();
+    console.log(body);
     const author = await createOneAuthor(body);
     return NextResponse.json(
       { success: true, message: "Author created successfully", data: author },
